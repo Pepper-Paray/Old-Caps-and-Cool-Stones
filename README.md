@@ -1,1 +1,1 @@
-#Old caps and cool stones
+# Caps-and-Stones-Mental-Health-Awareness-App
