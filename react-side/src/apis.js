@@ -1,4 +1,5 @@
-const API_URL = "https://your-backend-url.com";
+const API_URL = "https://old-caps-and-cool-stones.onrender.com/Caps";
+const API_URL = "https://old-caps-and-cool-stones.onrender.com/Stones";
 
 export async function getItem() {
     const res = await fetch('${API_URL}/items');

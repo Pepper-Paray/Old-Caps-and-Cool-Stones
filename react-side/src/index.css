@@ -1,111 +1,153 @@
+/* --------------------------------------------------
+   Global Theme + Variables
+-------------------------------------------------- */
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
+  --text: #4a4a4a;
+  --text-h: #1a1a1a;
+  --bg: #fafafa;
+  --border: #e2e2e2;
+  --card-bg: #ffffff;
   --accent: #aa3bff;
   --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  --accent-border: rgba(170, 59, 255, 0.4);
+  --shadow: rgba(0, 0, 0, 0.08) 0 4px 12px;
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --sans: system-ui, "Segoe UI", Roboto, sans-serif;
   --mono: ui-monospace, Consolas, monospace;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
+  font-family: var(--sans);
+  font-size: 18px;
   background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+  color: var(--text);
 }
 
+/* --------------------------------------------------
+   Dark Mode
+-------------------------------------------------- */
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
+    --text: #d1d5db;
+    --text-h: #f9fafb;
+    --bg: #121212;
+    --border: #2a2a2a;
+    --card-bg: #1c1c1c;
+    --shadow: rgba(0, 0, 0, 0.4) 0 4px 12px;
   }
 }
 
+/* --------------------------------------------------
+   Layout
+-------------------------------------------------- */
 body {
   margin: 0;
+  padding: 0;
 }
 
 #root {
-  width: 1126px;
-  max-width: 100%;
+  max-width: 900px;
   margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
+  padding: 40px 20px;
   box-sizing: border-box;
 }
 
+/* --------------------------------------------------
+   Typography
+-------------------------------------------------- */
 h1,
 h2 {
-  font-family: var(--heading);
+  color: var(--text-h);
+  margin: 0 0 20px;
+  font-weight: 600;
+}
+
+h1 {
+  font-size: 42px;
+  text-align: center;
+}
+
+h2 {
+  font-size: 26px;
+  margin-top: 40px;
+}
+
+/* --------------------------------------------------
+   Form Styling
+-------------------------------------------------- */
+form {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+  margin-bottom: 30px;
+  text-align: left;
+}
+
+form label {
+  display: block;
+  margin-bottom: 12px;
   font-weight: 500;
   color: var(--text-h);
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  margin-top: 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  font-size: 16px;
+  box-sizing: border-box;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
+form button {
+  margin-top: 15px;
+  padding: 12px 20px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+form button:hover {
+  background: #8a2cd6;
+}
+
+/* --------------------------------------------------
+   Item Cards
+-------------------------------------------------- */
+.item-card {
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.item-card strong {
+  font-size: 20px;
   color: var(--text-h);
 }
 
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
+.item-card img {
+  margin-top: 12px;
+  width: 160px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
 }
+
+/* --------------------------------------------------
+   Utility
+-------------------------------------------------- */
+.center {
+  text-align: center;
+}
+

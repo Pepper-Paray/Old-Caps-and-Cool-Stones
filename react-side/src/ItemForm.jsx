@@ -2,11 +2,13 @@ import { useState } from "react";
 
 export default function ItemForm({ onAdd }) {
     const [form, setForm] = useState({
-        type: "rock",
-        name: "",
-        found_at: "",
-        found_on: "",
-        notes: "",
+        type: "Cap",
+        brand: "",
+        color: "",
+        size: "",
+        feel: "",
+        cap_style: "",
+        stone_type: "",
         image_url: ""
     });
 
@@ -16,13 +18,23 @@ export default function ItemForm({ onAdd }) {
 
     function handleSubmit(e) {
         e.preventDefault();
-        onAdd(form);
+
+        const itemToAdd = {
+            ...form,
+            random_id: crypto.randomUUID()  // generate unique ID
+        };
+
+        onAdd(itemToAdd);
+
+        // Reset form
         setForm({
-            type: "rock",
-            name: "",
-            found_at: "",
-            found_on: "",
-            notes: "",
+            type: "Cap",
+            brand: "",
+            color: "",
+            size: "",
+            feel: "",
+            cap_style: "",
+            stone_type: "",
             image_url: ""
         });
     }
@@ -30,64 +42,102 @@ export default function ItemForm({ onAdd }) {
     return (
         <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
             
+            {/* Type */}
             <label>
                 Type:
                 <select name="type" value={form.type} onChange={handleChange}>
-                    <option value="rock">Rock</option>
-                    <option value="mineral">Mineral</option>
-                    <option value="fossil">Fossil</option>
+                    <option value="Cap">Cap</option>
+                    <option value="Stone">Stone</option>
                 </select>
             </label>
 
             <br />
 
+            {/* Brand */}
             <label>
-                Name:
+                Brand:
                 <input
                     type="text"
-                    name="name"
-                    value={form.name}
+                    name="brand"
+                    value={form.brand}
                     onChange={handleChange}
                 />
             </label>
 
             <br />
 
+            {/* Color */}
             <label>
-                Found At:
+                Color:
                 <input
                     type="text"
-                    name="found_at"
-                    value={form.found_at}
+                    name="color"
+                    value={form.color}
                     onChange={handleChange}
                 />
             </label>
 
             <br />
 
+            {/* Size */}
             <label>
-                Found On:
+                Size:
                 <input
-                    type="date"
-                    name="found_on"
-                    value={form.found_on}
+                    type="text"
+                    name="size"
+                    value={form.size}
                     onChange={handleChange}
                 />
             </label>
 
             <br />
 
+            {/* Feel */}
             <label>
-                Notes:
-                <textarea
-                    name="notes"
-                    value={form.notes}
+                Feel:
+                <input
+                    type="text"
+                    name="feel"
+                    value={form.feel}
                     onChange={handleChange}
                 />
             </label>
 
             <br />
 
+            {/* Cap-only field */}
+            {form.type === "Cap" && (
+                <>
+                    <label>
+                        Cap Style:
+                        <input
+                            type="text"
+                            name="cap_style"
+                            value={form.cap_style}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <br />
+                </>
+            )}
+
+            {/* Stone-only field */}
+            {form.type === "Stone" && (
+                <>
+                    <label>
+                        Stone Type:
+                        <input
+                            type="text"
+                            name="stone_type"
+                            value={form.stone_type}
+                            onChange={handleChange}
+                        />
+                    </label>
+                    <br />
+                </>
+            )}
+
+            {/* Image URL */}
             <label>
                 Image URL:
                 <input
