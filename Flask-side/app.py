@@ -27,29 +27,29 @@ def home():
 @app.route("/Caps", methods=["GET"])
 def get_caps():
     response = supabase.table("Caps").select("*").execute()
-    return response.data
+    return response.data or []
 
 @app.route("/Caps/<id>", methods=["GET"])
 def get_cap(id):
     response = supabase.table("Caps").select("*").eq("id", id).execute()
-    return response.data
+    return response.data or []
 
 @app.route("/Caps", methods=["POST"])
 def create_cap():
     body = request.json
     response = supabase.table("Caps").insert(body).execute()
-    return response.data
+    return response.data or []
 
 @app.route("/Caps/<id>", methods=["PUT"])
 def update_cap(id):
     body = request.json
     response = supabase.table("Caps").update(body).eq("id", id).execute()
-    return response.data
+    return response.data or []
 
 @app.route("/Caps/<id>", methods=["DELETE"])
 def delete_cap(id):
     response = supabase.table("Caps").delete().eq("id", id).execute()
-    return response.data
+    return response.data or []
 
 # -----------------------------
 # STONES ROUTES
@@ -58,29 +58,29 @@ def delete_cap(id):
 @app.route("/Stones", methods=["GET"])
 def get_stones():
     response = supabase.table("Stones").select("*").execute()
-    return response.data
+    return response.data or []
 
 @app.route("/Stones/<id>", methods=["GET"])
 def get_stone(id):
     response = supabase.table("Stones").select("*").eq("id", id).execute()
-    return response.data
+    return response.data or []
 
 @app.route("/Stones", methods=["POST"])
 def create_stone():
     body = request.json
     response = supabase.table("Stones").insert(body).execute()
-    return response.data
+    return response.data or []
 
 @app.route("/Stones/<id>", methods=["PUT"])
 def update_stone(id):
     body = request.json
     response = supabase.table("Stones").update(body).eq("id", id).execute()
-    return response.data
+    return response.data or []
 
 @app.route("/Stones/<id>", methods=["DELETE"])
 def delete_stone(id):
     response = supabase.table("Stones").delete().eq("id", id).execute()
-    return response.data
+    return response.data or []
 
 # -----------------------------
 # COMBINED ITEMS ROUTES
@@ -88,9 +88,9 @@ def delete_stone(id):
 
 @app.route("/items", methods=["GET"])
 def get_items():
-    caps = supabase.table("Caps").select("*").execute().data
-    stones = supabase.table("Stones").select("*").execute().data
-    return caps + stones
+    caps = supabase.table("Caps").select("*").execute().data or []
+    stones = supabase.table("Stones").select("*").execute().data or []
+    return {"items": caps + stones}
 
 @app.route("/items", methods=["POST"])
 def create_item():
@@ -104,7 +104,7 @@ def create_item():
     else:
         return {"error": "Invalid item type"}
 
-    return response.data
+    return response.data or []
 
 # -----------------------------
 # RUN SERVER
@@ -112,4 +112,5 @@ def create_item():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
 
