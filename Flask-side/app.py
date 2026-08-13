@@ -9,8 +9,7 @@ env_path = os.path.join(os.path.dirname(__file__), ".env")
 load_dotenv(env_path)
 
 app = Flask(__name__)
-CORS(app)
-
+CORS(app, resources={r"/*": {"origins": "https://capsandstones.netlify.app/"}})
 # Supabase setup
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
