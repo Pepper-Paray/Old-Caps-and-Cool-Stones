@@ -2,14 +2,11 @@ import { useState } from "react";
 
 export default function ItemForm({ onAdd }) {
     const [form, setForm] = useState({
-        type: "Cap",
+        type: "",
         brand: "",
         color: "",
         size: "",
         feel: "",
-        cap_style: "",
-        stone_type: "",
-        image_url: ""
     });
 
     function handleChange(e) {
@@ -27,14 +24,12 @@ export default function ItemForm({ onAdd }) {
         onAdd(itemToAdd);
 
         setForm({
-            type: "Cap",
+            type: "",
             brand: "",
             color: "",
             size: "",
             feel: "",
-            cap_style: "",
-            stone_type: "",
-            image_url: ""
+            
         });
     }
 
@@ -71,7 +66,7 @@ export default function ItemForm({ onAdd }) {
             <label>
                 Size:
                 <input
-                    type="text"
+                    type="number"
                     name="size"
                     value={form.size}
                     onChange={handleChange}
@@ -90,11 +85,11 @@ export default function ItemForm({ onAdd }) {
 
             {form.type === "Cap" && (
                 <label>
-                    Cap Style:
+                    Cap Type:
                     <input
                         type="text"
-                        name="cap_style"
-                        value={form.cap_style}
+                        name="type"
+                        value={form.type}
                         onChange={handleChange}
                     />
                 </label>
@@ -105,8 +100,8 @@ export default function ItemForm({ onAdd }) {
                     Stone Type:
                     <input
                         type="text"
-                        name="stone_type"
-                        value={form.stone_type}
+                        name="type"
+                        value={form.type}
                         onChange={handleChange}
                     />
                 </label>
