@@ -21,12 +21,11 @@ export default function ItemForm({ onAdd }) {
 
         const itemToAdd = {
             ...form,
-            random_id: crypto.randomUUID()  // generate unique ID
+            random_id: crypto.randomUUID()
         };
 
         onAdd(itemToAdd);
 
-        // Reset form
         setForm({
             type: "Cap",
             brand: "",
@@ -40,9 +39,7 @@ export default function ItemForm({ onAdd }) {
     }
 
     return (
-        <form onSubmit={handleSubmit} style={{ marginBottom: "20px" }}>
-            
-            {/* Type */}
+        <form onSubmit={handleSubmit} className="form-wrapper">
             <label>
                 Type:
                 <select name="type" value={form.type} onChange={handleChange}>
@@ -51,9 +48,6 @@ export default function ItemForm({ onAdd }) {
                 </select>
             </label>
 
-            <br />
-
-            {/* Brand */}
             <label>
                 Brand:
                 <input
@@ -64,9 +58,6 @@ export default function ItemForm({ onAdd }) {
                 />
             </label>
 
-            <br />
-
-            {/* Color */}
             <label>
                 Color:
                 <input
@@ -77,9 +68,6 @@ export default function ItemForm({ onAdd }) {
                 />
             </label>
 
-            <br />
-
-            {/* Size */}
             <label>
                 Size:
                 <input
@@ -90,9 +78,6 @@ export default function ItemForm({ onAdd }) {
                 />
             </label>
 
-            <br />
-
-            {/* Feel */}
             <label>
                 Feel:
                 <input
@@ -103,41 +88,30 @@ export default function ItemForm({ onAdd }) {
                 />
             </label>
 
-            <br />
-
-            {/* Cap-only field */}
             {form.type === "Cap" && (
-                <>
-                    <label>
-                        Cap Style:
-                        <input
-                            type="text"
-                            name="cap_style"
-                            value={form.cap_style}
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <br />
-                </>
+                <label>
+                    Cap Style:
+                    <input
+                        type="text"
+                        name="cap_style"
+                        value={form.cap_style}
+                        onChange={handleChange}
+                    />
+                </label>
             )}
 
-            {/* Stone-only field */}
             {form.type === "Stone" && (
-                <>
-                    <label>
-                        Stone Type:
-                        <input
-                            type="text"
-                            name="stone_type"
-                            value={form.stone_type}
-                            onChange={handleChange}
-                        />
-                    </label>
-                    <br />
-                </>
+                <label>
+                    Stone Type:
+                    <input
+                        type="text"
+                        name="stone_type"
+                        value={form.stone_type}
+                        onChange={handleChange}
+                    />
+                </label>
             )}
 
-            {/* Image URL */}
             <label>
                 Image URL:
                 <input
@@ -148,9 +122,7 @@ export default function ItemForm({ onAdd }) {
                 />
             </label>
 
-            <br />
-
-            <button type="submit">Add Item</button>
+            <button type="submit" className="button">Add Item</button>
         </form>
     );
 }
