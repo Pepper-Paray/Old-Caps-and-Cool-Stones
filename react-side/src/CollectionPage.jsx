@@ -33,9 +33,7 @@ export default function CollectionPage() {
           <div>Color: {item.color}</div>
           <div>Size: {item.size}</div>
           <div>Feel: {item.feel}</div>
-          {item.type === "Cap" && <div>Cap Style: {item.cap_style}</div>}
-          {item.type === "Stone" && <div>Stone Type: {item.stone_type}</div>}
-          {item.image_url && <img src={item.image_url} alt={item.type} />}
+          <div>Type: {item.type}</div>
         </div>
       ))}
     </div>

@@ -112,15 +112,6 @@ export default function ItemForm({ onAdd }) {
                 </label>
             )}
 
-            <label>
-                Image URL:
-                <input
-                    type="text"
-                    name="image_url"
-                    value={form.image_url}
-                    onChange={handleChange}
-                />
-            </label>
 
             <button type="submit" className="button">Add Item</button>
         </form>
