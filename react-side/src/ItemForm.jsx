@@ -1,102 +1,64 @@
 import { useState } from "react";
+import { addItem } from "../apis";
 
-export default function ItemForm({ onAdd }) {
-    const [form, setForm] = useState({
-        type: "",
-        brand: "",
-        color: "",
-        size: "",
-        feel: "",
+export default function ItemForm() {
+  const [form, setForm] = useState({
+    type: "",
+    feel: "",
+    size: "",
+  });
+
+  function handleChange(e) {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  }
+
+  async function handleSubmit(e) {
+    e.preventDefault();
+
+    const data = await addItem(form.feel, form.type, form.size);
+
+    console.log("Flask response:", data);
+
+    setForm({
+      type: "",
+      feel: "",
+      size: "",
     });
+  }
 
-    function handleChange(e) {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    }
+  return (
+    <form onSubmit={handleSubmit} className="form-wrapper">
+      <label>
+        Type:
+        <select name="type" value={form.type} onChange={handleChange}>
+          <option value="">Select type</option>
+          <option value="Cap">Cap</option>
+          <option value="Stone">Stone</option>
+        </select>
+      </label>
 
-    function handleSubmit(e) {
-        e.preventDefault();
+      <label>
+        Feel:
+        <input
+          type="text"
+          name="feel"
+          value={form.feel}
+          onChange={handleChange}
+        />
+      </label>
 
-        const itemToAdd = {
-            ...form,
-            random_id: crypto.randomint8()
-        };
+      <label>
+        Size:
+        <input
+          type="number"
+          name="size"
+          value={form.size}
+          onChange={handleChange}
+        />
+      </label>
 
-        onAdd(itemToAdd);
-
-        setForm({
-            type: "",
-            brand: "",
-            color: "",
-            size: "",
-            feel: "",
-            
-        });
-    }
-
-    return (
-        <form onSubmit={handleSubmit} className="form-wrapper">
-            <label>
-                Type:
-                <select name="type" value={form.type} onChange={handleChange}>
-                    <option value="Cap">Cap</option>
-                    <option value="Stone">Stone</option>
-                </select>
-            </label>
-
-            <label>
-                Brand:
-                <input
-                    type="text"
-                    name="brand"
-                    value={form.brand}
-                    onChange={handleChange}
-                />
-            </label>
-
-            <label>
-                Color:
-                <input
-                    type="text"
-                    name="color"
-                    value={form.color}
-                    onChange={handleChange}
-                />
-            </label>
-
-            <label>
-                Size:
-                <input
-                    type="number"
-                    name="size"
-                    value={form.size}
-                    onChange={handleChange}
-                />
-            </label>
-
-            <label>
-                Feel:
-                <input
-                    type="text"
-                    name="feel"
-                    value={form.feel}
-                    onChange={handleChange}
-                />
-            </label>
-            
-                <label>
-                    Type:
-                    <input
-                        type="text"
-                        name="type"
-                        value={form.type}
-                        onChange={handleChange}
-                    />
-                </label>
-            )
-
-
-
-            <button type="submit" className="button">Add Item</button>
-        </form>
-    );
+      <button type="submit" className="button">Add Item</button>
+    </form>
+  );
 }
+
