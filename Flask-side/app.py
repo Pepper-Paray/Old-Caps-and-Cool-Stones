@@ -95,16 +95,27 @@ def get_items():
 @app.route("/items", methods=["POST"])
 def create_item():
     body = request.json
-    item_type = body.get("type")
+    item_type = body.get("table") or body.get("type")
 
+    # Caps insert
     if item_type == "Cap":
-        response = supabase.table("Caps").insert(body).execute()
-    elif item_type == "Stone":
-        response = supabase.table("Stones").insert(body).execute()
-    else:
-        return {"error": "Invalid item type"}
+        response = supabase.table("Caps").insert({
+            "type": body.get("type"),
+            "brand": body.get("brand"),
+            "size": body.get("size")
+        }).execute()
+        return response.data or []
 
-    return response.data or []
+    # Stones insert
+    if item_type == "Stone":
+        response = supabase.table("Stones").insert({
+            "type": body.get("type"),
+            "feel": body.get("feel"),
+            "size": body.get("size")
+        }).execute()
+        return response.data or []
+
+    return {"error": "Invalid item type"}
 
 # -----------------------------
 # RUN SERVER
@@ -112,5 +123,6 @@ def create_item():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
 
 
