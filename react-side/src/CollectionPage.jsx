@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { loadItems, addItem } from "./api";
+import { loadItems, addItem } from "./apis";
 import ItemForm from "./ItemForm";
 
 export default function CollectionPage() {
