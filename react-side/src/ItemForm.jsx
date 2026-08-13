@@ -18,7 +18,7 @@ export default function ItemForm({ onAdd }) {
 
         const itemToAdd = {
             ...form,
-            random_id: crypto.randomUUID()
+            random_id: crypto.randomint8()
         };
 
         onAdd(itemToAdd);
@@ -82,10 +82,9 @@ export default function ItemForm({ onAdd }) {
                     onChange={handleChange}
                 />
             </label>
-
-            {form.type === "Cap" && (
+            
                 <label>
-                    Cap Type:
+                    Type:
                     <input
                         type="text"
                         name="type"
@@ -93,19 +92,8 @@ export default function ItemForm({ onAdd }) {
                         onChange={handleChange}
                     />
                 </label>
-            )}
+            )
 
-            {form.type === "Stone" && (
-                <label>
-                    Stone Type:
-                    <input
-                        type="text"
-                        name="type"
-                        value={form.type}
-                        onChange={handleChange}
-                    />
-                </label>
-            )}
 
 
             <button type="submit" className="button">Add Item</button>
