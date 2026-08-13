@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { addItem } from "../apis";
 
-export default function ItemForm() {
+export default function ItemForm({ onAdd }) {
   const [form, setForm] = useState({
     type: "",
+    brand: "",
     feel: "",
     size: "",
   });
@@ -15,12 +15,26 @@ export default function ItemForm() {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    const data = await addItem(form.feel, form.type, form.size);
+    // Send only the fields that matter for the chosen type
+    const newItem =
+      form.type === "Cap"
+        ? {
+            type: form.type,
+            brand: form.brand,
+            size: Number(form.size),
+          }
+        : {
+            type: form.type,
+            feel: form.feel,
+            size: Number(form.size),
+          };
 
-    console.log("Flask response:", data);
+    await onAdd(newItem.feel, newItem.type, newItem.size, newItem.brand);
 
+    // Reset form
     setForm({
       type: "",
+      brand: "",
       feel: "",
       size: "",
     });
@@ -30,22 +44,38 @@ export default function ItemForm() {
     <form onSubmit={handleSubmit} className="form-wrapper">
       <label>
         Type:
-        <select name="type" value={form.type} onChange={handleChange}>
+        <select name="type" value={form.type} onChange={handleChange} required>
           <option value="">Select type</option>
           <option value="Cap">Cap</option>
           <option value="Stone">Stone</option>
         </select>
       </label>
 
-      <label>
-        Feel:
-        <input
-          type="text"
-          name="feel"
-          value={form.feel}
-          onChange={handleChange}
-        />
-      </label>
+      {form.type === "Cap" && (
+        <label>
+          Brand:
+          <input
+            type="text"
+            name="brand"
+            value={form.brand}
+            onChange={handleChange}
+            required
+          />
+        </label>
+      )}
+
+      {form.type === "Stone" && (
+        <label>
+          Feel:
+          <input
+            type="text"
+            name="feel"
+            value={form.feel}
+            onChange={handleChange}
+            required
+          />
+        </label>
+      )}
 
       <label>
         Size:
@@ -54,6 +84,7 @@ export default function ItemForm() {
           name="size"
           value={form.size}
           onChange={handleChange}
+          required
         />
       </label>
 

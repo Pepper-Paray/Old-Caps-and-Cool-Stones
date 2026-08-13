@@ -16,8 +16,8 @@ export default function CollectionPage() {
   }, []);
 
   // Called when ItemForm submits
-  async function handleAdd(feel, type, size) {
-    await addItem(feel, type, size);
+  async function handleAdd(feel, type, size, brand) {
+    await addItem(feel, type, size, brand);
     fetchItems(); // refresh list
   }
 
@@ -31,8 +31,20 @@ export default function CollectionPage() {
 
       {items.map((item) => (
         <div key={item.id} className="item-card">
+          <strong>ID:</strong> {item.id}
+          <br />
+
           <strong>Type:</strong> {item.type}
-          <div><strong>Feel:</strong> {item.feel}</div>
+          <br />
+
+          {item.type === "Cap" && (
+            <div><strong>Brand:</strong> {item.brand}</div>
+          )}
+
+          {item.type === "Stone" && (
+            <div><strong>Feel:</strong> {item.feel}</div>
+          )}
+
           <div><strong>Size:</strong> {item.size}</div>
         </div>
       ))}
