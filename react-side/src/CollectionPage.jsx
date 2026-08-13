@@ -33,7 +33,7 @@ export default function CollectionPage() {
           <div>Color: {item.color}</div>
           <div>Size: {item.size}</div>
           <div>Feel: {item.feel}</div>
-          <div>Type: {item.type}</div>
+          <div>Typeof: {item.typeof}</div>
         </div>
       ))}
     </div>
