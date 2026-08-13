@@ -2,7 +2,8 @@ import { useState } from "react";
 
 export default function ItemForm({ onAdd }) {
   const [form, setForm] = useState({
-    type: "",
+    table: "",   // Cap or Stone
+    type: "",    // typed text
     brand: "",
     feel: "",
     size: "",
@@ -15,24 +16,26 @@ export default function ItemForm({ onAdd }) {
   async function handleSubmit(e) {
     e.preventDefault();
 
-    // Send only the fields that matter for the chosen type
+    // Build item based on selected table
     const newItem =
-      form.type === "Cap"
+      form.table === "Cap"
         ? {
-            type: form.type,
+            type: form.type,     // typed text
             brand: form.brand,
             size: Number(form.size),
           }
         : {
-            type: form.type,
+            type: form.type,     // typed text
             feel: form.feel,
             size: Number(form.size),
           };
 
+    // Send to parent
     await onAdd(newItem.feel, newItem.type, newItem.size, newItem.brand);
 
     // Reset form
     setForm({
+      table: "",
       type: "",
       brand: "",
       feel: "",
@@ -42,16 +45,38 @@ export default function ItemForm({ onAdd }) {
 
   return (
     <form onSubmit={handleSubmit} className="form-wrapper">
+
+      {/* Select table */}
       <label>
-        Type:
-        <select name="type" value={form.type} onChange={handleChange} required>
-          <option value="">Select type</option>
-          <option value="Cap">Cap</option>
-          <option value="Stone">Stone</option>
+        Add To:
+        <select name="table" value={form.table} onChange={handleChange} required>
+          <option value="">Choose one</option>
+          <option value="Cap">Caps</option>
+          <option value="Stone">Stones</option>
         </select>
       </label>
 
-      {form.type === "Cap" && (
+      {/* Type is typed manually */}
+      {form.table && (
+        <label>
+          Type:
+          <input
+            type="text"
+            name="type"
+            value={form.type}
+            onChange={handleChange}
+            placeholder={
+              form.table === "Cap"
+                ? "hook, velcro, snapback..."
+                : "granite, quartz, river rock..."
+            }
+            required
+          />
+        </label>
+      )}
+
+      {/* Brand only for Caps */}
+      {form.table === "Cap" && (
         <label>
           Brand:
           <input
@@ -64,7 +89,8 @@ export default function ItemForm({ onAdd }) {
         </label>
       )}
 
-      {form.type === "Stone" && (
+      {/* Feel only for Stones */}
+      {form.table === "Stone" && (
         <label>
           Feel:
           <input
@@ -77,16 +103,19 @@ export default function ItemForm({ onAdd }) {
         </label>
       )}
 
-      <label>
-        Size:
-        <input
-          type="number"
-          name="size"
-          value={form.size}
-          onChange={handleChange}
-          required
-        />
-      </label>
+      {/* Size for both */}
+      {form.table && (
+        <label>
+          Size:
+          <input
+            type="number"
+            name="size"
+            value={form.size}
+            onChange={handleChange}
+            required
+          />
+        </label>
+      )}
 
       <button type="submit" className="button">Add Item</button>
     </form>

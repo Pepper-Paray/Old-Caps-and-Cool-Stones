@@ -5,7 +5,7 @@ import ItemForm from "./ItemForm";
 export default function CollectionPage() {
   const [items, setItems] = useState([]);
 
-  // Load items from Flask when page loads
+  // Load items from Supabase when page loads
   async function fetchItems() {
     const data = await getItems();
     setItems(data.items || []);
@@ -17,7 +17,7 @@ export default function CollectionPage() {
 
   // Called when ItemForm submits
   async function handleAdd(feel, type, size, brand) {
-    await addItem(feel, type, size, brand);
+    await addItem({ feel, type, size, brand });
     fetchItems(); // refresh list
   }
 
@@ -37,11 +37,13 @@ export default function CollectionPage() {
           <strong>Type:</strong> {item.type}
           <br />
 
-          {item.type === "Cap" && (
+          {/* Caps have brand */}
+          {item.brand && (
             <div><strong>Brand:</strong> {item.brand}</div>
           )}
 
-          {item.type === "Stone" && (
+          {/* Stones have feel */}
+          {item.feel && (
             <div><strong>Feel:</strong> {item.feel}</div>
           )}
 
