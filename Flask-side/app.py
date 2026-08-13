@@ -1,22 +1,28 @@
 import os
-import json
 from flask import Flask, request
+from flask_cors import CORS
 from supabase import create_client
 from dotenv import load_dotenv
 
+# Load environment variables
 env_path = os.path.join(os.path.dirname(__file__), ".env")
 load_dotenv(env_path)
 
 app = Flask(__name__)
+CORS(app)
 
+# Supabase setup
 SUPABASE_URL = os.environ.get("SUPABASE_URL")
 SUPABASE_KEY = os.environ.get("SUPABASE_KEY")
-
 supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 
 @app.route("/")
 def home():
-    return "API is working"
+    return {"message": "API is working"}
+
+# -----------------------------
+# CAPS ROUTES
+# -----------------------------
 
 @app.route("/Caps", methods=["GET"])
 def get_caps():
@@ -45,6 +51,10 @@ def delete_cap(id):
     response = supabase.table("Caps").delete().eq("id", id).execute()
     return response.data
 
+# -----------------------------
+# STONES ROUTES
+# -----------------------------
+
 @app.route("/Stones", methods=["GET"])
 def get_stones():
     response = supabase.table("Stones").select("*").execute()
@@ -72,5 +82,34 @@ def delete_stone(id):
     response = supabase.table("Stones").delete().eq("id", id).execute()
     return response.data
 
+# -----------------------------
+# COMBINED ITEMS ROUTES
+# -----------------------------
+
+@app.route("/items", methods=["GET"])
+def get_items():
+    caps = supabase.table("Caps").select("*").execute().data
+    stones = supabase.table("Stones").select("*").execute().data
+    return caps + stones
+
+@app.route("/items", methods=["POST"])
+def create_item():
+    body = request.json
+    item_type = body.get("type")
+
+    if item_type == "Cap":
+        response = supabase.table("Caps").insert(body).execute()
+    elif item_type == "Stone":
+        response = supabase.table("Stones").insert(body).execute()
+    else:
+        return {"error": "Invalid item type"}
+
+    return response.data
+
+# -----------------------------
+# RUN SERVER
+# -----------------------------
+
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+
