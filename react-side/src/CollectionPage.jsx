@@ -8,7 +8,7 @@ export default function CollectionPage() {
   // Load items from Supabase when page loads
   async function fetchItems() {
     const data = await getItems();
-    setItems(data.items || []);
+    setItems(data || []);
   }
 
   useEffect(() => {
